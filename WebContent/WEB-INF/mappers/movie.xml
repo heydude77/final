@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="movie">
+
+	
+	<select id="getAllMovies" resultType="java.util.HashMap" >
+		select * from movie
+	</select>
+	
+	<select id="getMovieSchedule" resultType="java.util.HashMap" parameterType="java.lang.String">
+		select * from time where title= #{title}
+	</select>
+
+	<insert id="makeReservation" parameterType="java.util.HashMap">
+		insert into reservation values(#{time}, #{title}, #{seat})
+	</insert>
+	
+	<select id="getSeatsByTitleAndSchedule" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		select seat from reservation where title= #{title} and time = #{time}
+	</select>
+<!-- 
+	<insert id="addDataUsingMap" parameterType="java.util.HashMap">
+		insert into board values(board_seq.nextval, #{writer}, #{title}, sysdate, #{content}, 0, #{attach})
+	</insert>
+	
+-->
+</mapper>
+

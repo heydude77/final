@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="issue">
+	
+	<insert id="addOne" parameterType="java.util.HashMap">
+		insert into issue values(issue_seq.nextval, #{cate}, #{content}, #{agree}, #{disagree}, #{writer}, sysdate)
+	</insert>
+	
+	<select id="getAllIssue" resultType="java.util.HashMap" >
+		select * from issue order by regdate desc
+	</select>
+	
+	<select id="getOneByNo" parameterType="java.lang.Number"  resultType="java.util.HashMap">
+		select * from issue where no = #{no}
+	</select>
+	
+	<select id="getSomeRecent" resultType="java.util.HashMap">
+		select * from 
+			(select * from issue where sysdate-regdate between 0 and 1 order by regdate desc) 
+		where rownum &lt;=3 
+	</select>
+	<select id="getAllWithOpinionCount" resultType="java.util.HashMap">
+		select * from issue t1 
+			left join (select ino, count(*) cnt from opinion group by ino) t2 on t1.no =t2.ino 
+			order by regdate desc
+	</select>
+	<select id="getOneHot" resultType="java.util.HashMap">
+	select * from (select * from issue t1 
+			left join (select ino, count(*) cnt from opinion group by ino) t2 on t1.no =t2.ino 
+			order by cnt desc) where rownum = 1 
+	</select>
+	<select id="getCountByCate1" resultType="java.util.HashMap">
+	select 'life' as cate , count(*) as cnt from issue where cate ='life' 
+		union 
+	select 'etc' as cate , count(*) as cnt from issue where cate ='etc'
+		union 
+	select 'game' as cate , count(*) as cnt from issue where cate ='game'
+		union 
+	select 'it' as cate , count(*) as cnt from issue where cate ='it'
+		union 
+	select 'culture' as cate , count(*) as cnt from issue where cate ='culture'
+		union 
+	select 'sports' as cate , count(*) as cnt from issue where cate ='sports'
+		union
+	select 'politic' as cate , count(*) as cnt from issue where cate ='politic' 
+	</select>
+	<select id="getCountByCate2" resultType="java.util.HashMap" >
+	select category.*, nvl(t1.cnt,0) as cnt from category 
+		left join (select cate, count(*) as cnt from issue group by cate) t1 
+		on category.key = t1.cate
+	</select>
+	
+	
+	
+</mapper>
+
+
+
+
+
+
