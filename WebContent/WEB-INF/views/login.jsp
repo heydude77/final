@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,6 +27,9 @@
 	<form action="${pageContext.servletContext.contextPath}/login.do" method="post" class="form-signin">
 		 <img class="mb-4" src="${pageContext.servletContext.contextPath }/image/dal.jpg" alt="" width="200" height="250">
 		<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+		<c:if test="${err}">
+			
+		</c:if>
 		<label  class="sr-only">Employee Number</label> <input
 			type="text" id="inutId" class="form-control"
 			placeholder="Employee Number" required autofocus name="id"> <label

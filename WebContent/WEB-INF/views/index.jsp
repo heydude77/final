@@ -16,9 +16,6 @@
 <title>사내 관리 프로그램</title>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-<!-- Bootstrap core CSS -->
-<link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
-
 <!-- Custom styles for this template -->
 <link href="${pageContext.servletContext.contextPath }/css/bootstrap.css" rel="stylesheet">
 </head>
@@ -35,24 +32,22 @@
 
       <div class="my-3 p-3 bg-white rounded shadow-sm">
         <h6 class="border-bottom border-gray pb-2 mb-0">Recent updates</h6>
+        <div id="recent">
+        
+        </div>
+        <div class="media text-muted pt-3">
+          <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+            <strong class="d-block text-gray-dark">타이틀값</strong>
+          	최근 소식 입력칸 
+          </p>
+        </div>
         <div class="media text-muted pt-3">
           <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <strong class="d-block text-gray-dark">@username</strong>
             Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
           </p>
         </div>
-        <div class="media text-muted pt-3">
-          <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <strong class="d-block text-gray-dark">@username</strong>
-            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-          </p>
-        </div>
-        <div class="media text-muted pt-3">
-         <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <strong class="d-block text-gray-dark">@username</strong>
-            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-          </p>
-        </div>
+       
         <small class="d-block text-right mt-3">
           <a href="#">All updates</a>
         </small>
@@ -91,8 +86,37 @@
           <a href="#">All suggestions</a>
         </small>
       </div>
+      
+   <script>
+   console.log(location.host);
+   console.log(location.hostname);
+   console.log(location.origin);
    
-
+   var ws = new WebSocket("ws://"+location.host+
+         "${pageContext.servletContext.contextPath}/conn.do");
+   
+   ws.onmessage = function(got){   
+      //매개 변수 설정하면 받은 내용에 관련된 객체를 넘겨주면서 콜이 일어나고 ,      
+      var obj = JSON.parse(got.data);     
+      switch (obj.mode) {
+	      case "needId":	    	  
+	    	  var info = {"mode":"login","userId":"${userId}"};
+	    	  ws.send(JSON.stringify(info));
+	         break;
+	      case "login":	    	  
+	    	  var newLogin = obj.user;
+	    	  console.log(newLogin+" has logged in");
+	    	  var html = 
+	    		 "<div class=\"media text-muted pt-3\"><p class=\"media-body pb-3 mb-0 small lh-125 border-bottom border-gray\">";
+	          html += "<strong class=\"d-block text-gray-dark\">"+newLogin+"님"+"</strong>";
+	          html += "로그인 하셨습니다. </p> </div>";
+	          document.getElementById("recent").innerHTML+=html;
+	          break;
+      }
+   };
+   
+   
+   </script>
    
   </body>
 </html>

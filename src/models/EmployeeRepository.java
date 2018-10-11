@@ -32,6 +32,6 @@ public class EmployeeRepository {
 		return template.insert("employee.addEmployee", map);
 	}
 	public boolean getPasswordById(Map map) {		
-		return  map.get("pw").equals(template.selectOne("employee.ge;tPasswordById", map.get("id")));
+		return  map.get("pw").equals(template.selectOne("employee.getPasswordById", map.get("id")));
 	}
 }

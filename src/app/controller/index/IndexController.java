@@ -20,7 +20,7 @@ public class IndexController {
 	@GetMapping("/index.do")
 	public String indexHandle(WebRequest wr) {
 		//wr.setAttribute("auth", true, wr.SCOPE_SESSION);
-		if(wr.getAttribute("auth", wr.SCOPE_SESSION)==null) {
+		if(wr.getAttribute("auth", WebRequest.SCOPE_SESSION)==null) {
 			return "login"; //"redirect:/login.do";
 		}else {
 			return "index";
@@ -29,11 +29,16 @@ public class IndexController {
 	
 	@PostMapping("/login.do")
 	public String loginPostHandle(@RequestParam Map param, WebRequest wr) {
+		System.out.println(param.get("id"));
+		System.out.println(param.get("pw"));
+		System.out.println(er.getPasswordById(param));
 		if(er.getPasswordById(param)) {
-			wr.setAttribute("auth", true, wr.SCOPE_SESSION);
+			wr.setAttribute("auth", true, WebRequest.SCOPE_SESSION);
+			wr.setAttribute("userId", param.get("id"), wr.SCOPE_SESSION);
 			return "index";
 		}else {
-			return "redirect:/login.do";
+			wr.setAttribute("err", true, WebRequest.SCOPE_REQUEST);
+			return "redirect:/index.do";
 		}
 	}
 	
