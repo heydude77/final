@@ -30,15 +30,23 @@ public class EmployeeController {
 	}
 	
 	@PostMapping("/add.do")
-	public String addPostHandle(@RequestParam Map param) {
+	public String addPostHandle(@RequestParam Map param, ModelMap map) {
 			
 		param.put("id", er.getEmployeeSeq());
 		param.put("pass", "1111");
 		
-		System.out.println(param);
-		int r = er.addEmployee(param);
-		System.out.println("dbsuccess?" + r);
-		
-		return "";
+		try {
+			int r = er.addEmployee(param);
+			map.put("employee", param);
+			return "admin.employee.add";
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put("departments", er.getDepartments());
+			map.put("positions", er.getPositions());
+			map.put("err","on");
+			return "admin.employee.add";
+		}
+	
 	}
 }

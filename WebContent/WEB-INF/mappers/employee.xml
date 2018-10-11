@@ -15,8 +15,11 @@
 	</select>
 	
 	<insert id="addEmployee" parameterType="java.util.HashMap">
-		insert into employee values (#{id}, #{pass}, #{name}, #{did}, #{pid}, #{date})
+		insert into employee values (#{id}, #{pass}, #{name}, #{did}, #{pid}, #{date}) <!-- to_date(#{date}, 'YYYY-MM-DD') -->
 	</insert>       
-
+	
+	<select id="getPasswordById" parameterType="java.lang.String" resultType="java.lang.String">
+		select pass from employee where id=#{id}
+	</select>
 </mapper>
 

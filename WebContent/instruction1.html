@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+## 그룹웨어 서비스 ##
+  - 특정회사의 사내프로그램 
+  
+  - 가입절차는 따로 없고, 사원들한테 아이디를 부여하는 형태로 구축.
+  - 전체게시판 / 부서별게시판  (파일첨부)
+  - 사원간 쪽지전송 
+  - 부서 채팅 서비스  (웹소켓 + 몽고)
+
+  - 개인정보 변경 서비스
+   : 비밀번호, 프로필 사진 변경
+ 
+
+ DATABASE #
+  - 부서 테이블 
+  create table department (
+     did number(3,0) not null,
+     dname varchar2(60) not null,
+    
+     constraint d_rule primary key(did)
+  );
+  create sequence department_seq start with 100 increment by 50;
+   
+  인사부 / 관리부 / 재무부 / 개발부 / 영업부   이걸 inserting 시켜두고
+  insert into department values(department_seq.nextval,'인사부');
+  insert into department values(department_seq.nextval,'관리부');
+  insert into department values(department_seq.nextval,'재무부');
+  insert into department values(department_seq.nextval,'개발부');
+  insert into department values(department_seq.nextval,'영업부');
+
+
+  create table position (
+     pid number(2, 0) not null,
+     pname varchar2(60) not null,
+     constraint p_rule primary key(pid)
+  );
+  create sequence position_seq start with 10 increment by 5;
+  사원 / 대리 /  과장 / 차장 / 부장 / 이사    이정도 insert.
+ 
+  insert into position values(position_seq.nextval,'사원');
+  insert into position values(position_seq.nextval,'대리');
+  insert into position values(position_seq.nextval,'과장');
+  insert into position values(position_seq.nextval,'차장');
+  insert into position values(position_seq.nextval,'부장');
+  insert into position values(position_seq.nextval,'이사');
+
+  create table employee (
+     id varchar2(20) not null,
+     pass varchar2(30) not null,
+     name varchar2(30) not null,
+     did number(3,0) not null,
+     pid number(2,0) not null,
+     joindate date not null,
+     
+     constraint e_rule_1 primary key(id),
+     constraint e_rule_2 foreign key(did) references department(did),
+     constraint e_rule_3 foreign key(pid) references position(pid)
+  );
+   
+  create sequence employee_seq start with 1000;
+
+ ────────────────────────────────
+  # 사원정보 등록 #
+     관리자만 가능하고, 데이터 입력 폼은, 
+     이름이랑 부서 직책, 입사일을 입력할수 있게 해두고
+     비밀번호는 기본 1111, 아이디는 시퀀스에서 숫자 뽑아서 앞에다가 em 붙여서 저장.
+
+  # 기본 관리자 레이아웃 #
+    상단에 nav 붙이고, 가운데는 두칸으로 나눠서 사용 
+    (tiles - template 만들고, 필요한 jsp들 구축)
+
+  컨트롤러 만들어서
+   /admin/employee/add.do   매핑 잡아서,
+  만들어둔 페이지들로 타일 만들어질수 있게 설정잡아서 그쪽으로 뷰 처리.
+
+  실습 ##
+   ▶   /admin/employee/add.do  요청 처리할때, 
+     DataBase 에서 부서정보 가지고 오고, 직책정보 가지고 와서,
+     데이터 세팅시킨후 뷰 수정 , action과 name 설정 , select 변경
+
+     (option value는 id값  option태그안의 글자는 name값)
+
+   ▶  /admin/employee/add.do   (POST)
+     데이터 전달받고, 
+     현재 employee_seq 값 뽑아와서, ID를 "em"+뽑은값 으로 만들어서  employee table에 등록
+     비번은 1111로
+    
+      <select id="getSequenceVal" resultType="java.lang.Integer" >
+         select employee_seq.nextval from dual
+      </select>
+      이거 매퍼에 등록시키고 ( Repository/DAO ) 에서 
+        Integer i = sqlSession.selectOne("????????.getSequenceVal");
+ 
+     등록처리후 뷰는 알아서,  
+      (실패시 redirect 라던가,, 성공을 하게 되면, 
+      홍길동 사원 등록 (부여된 아이디 em1002)
+
+
+ 
+</body>
+</html>
