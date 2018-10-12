@@ -28,5 +28,10 @@
 			(select employee.*, department.dname from employee join department on employee.did = department.did ) t 
 		join position on t.pid = position.pid where id=#{id }
 	</select>
+	
+	<update id="chagePassword" parameterType="java.util.HashMap">
+		update employee set pass = #{pass} where id=#{id}
+	</update>
+	
 </mapper>
 
