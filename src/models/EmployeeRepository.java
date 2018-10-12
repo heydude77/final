@@ -34,4 +34,8 @@ public class EmployeeRepository {
 	public boolean getPasswordById(Map map) {		
 		return  map.get("pw").equals(template.selectOne("employee.getPasswordById", map.get("id")));
 	}
+	
+	public Map getEmployee(String id){
+		return template.selectOne("employee.getEmployee", id);
+	}
 }

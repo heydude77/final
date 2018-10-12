@@ -28,37 +28,32 @@ public class WebSocketController extends TextWebSocketHandler {
 
 	   @Override
 	   public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-	      // Å¬¶óÀÌ¾ðÆ® Ãø¿¡¼­ WebSocket °´Ã¼¸¦ »ý¼ºÇØ¼­ ¿¬°áÀÌ µÉ¶§
+	      // Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ WebSocket ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½É¶ï¿½
 	      service.addSocket(session);
-	      System.out.println("afterConnectionEstablished..\n"+session+" / "+ service.totalSize());
-
-	      Map data = new HashMap();
-		      data.put("mode", "needId");
-	      TextMessage msg=new TextMessage(gson.toJson(data));
-	      session.sendMessage(msg);
-
+	      System.out.println(session.getId());
+	      System.out.println(session.getAttributes());
+	            
+	      Map<String, Object> attrs = session.getAttributes(); // httpSession ì´ ì•„ë‹ˆë‹¤.
+	      // ì´ ê¸°ëŠ¥ì„ ì‚¬ìš©í•˜ëŠ” ë°©ë²•ì„ ì•Œì•„ì•¼ í•œë‹¤.
+	      
+	      
+	      
 	   }
 
 	   @Override
 	   public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-	      // Å¬¶óÀÌ¾ðÆ® Ãø¿¡¼­ »ç¿ëÁßÀÎ WebSocket ÀÌ Á¾·á µÉ¶§   
+	      // Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ WebSocket ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½É¶ï¿½   
 	      System.out.println("afterConnectionClosed..");
 	      service.removeSocket(session);
 	   }
 
 	   @Override
 	   protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-	      // Å¬¶óÀÌ¾ðÆ® Ãø¿¡¼­ Websocket °´Ã¼¸¦ ÅëÇØ µ¥ÀÌÅÍ¸¦ Àü¼ÛÇßÀ»¶§.
+	      // Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Websocket ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 	      String payload=message.getPayload();
 	      System.out.println("handleTextMessage >> "+payload);
 	      Map map = gson.fromJson(payload, Map.class);
-	      if(map.get("mode").equals("login")) {
-	    	Map data = new HashMap();  
-	    	data.put("mode", "login");
-	      	data.put("user", map.get("userId"));
-	      	service.sendAll(data);
-	      	System.out.println("data sent..");
-	      }	      	     
+	          	     
 
 	   }
 }

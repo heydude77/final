@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<definition name="guest.home" template="/WEB-INF/tiles/guest-template.jsp">
+		<put-attribute name="nav" value="/WEB-INF/views/guest/nav.jsp"/>
+		<put-attribute name="left" value="/WEB-INF/views/guest/side.jsp"/>
+		<put-attribute name="center" value="/WEB-INF/views/guest/index.jsp"/>
+	</definition>
+	
+	<definition name="mypage.change.auth" template="/WEB-INF/tiles/guest-template.jsp">
+		<put-attribute name="nav" value="/WEB-INF/views/guest/nav.jsp"/>
+		<put-attribute name="left" value="/WEB-INF/views/guest/side.jsp"/>
+		<put-attribute name="center" expression="${requestScope.center}"/>
+	</definition>
+	
+	<definition name="mypage.change" template="/WEB-INF/tiles/guest-template.jsp">
+		<put-attribute name="nav" value="/WEB-INF/views/guest/nav.jsp"/>
+		<put-attribute name="left" value="/WEB-INF/views/guest/side.jsp"/>
+		<put-attribute name="center" expression="${requestScope.center}"/>
+	</definition>
+	
+	<definition name="exam" template="/WEB-INF/tiles/template.jsp">
+		<put-attribute name="page1" value="/WEB-INF/views/nav.jsp"/>
+		<put-attribute name="page2" expression="${requestScope.page2 }"/>
+	</definition>
+	
+	<definition name="elTiles" template="/WEB-INF/tiles/template.jsp">
+		<put-attribute name="page1" expression="${sessionScope.page1 }"/>
+		<put-attribute name="page2" expression="${requestScope.center}"/>
+	</definition>
+	<!-- 
+		el로 insert 해야되는 페이지를 설정해서도 사용할수 있게 지원하는데, expression 으로 설정
+		scope를 지정하지 않는다면 모든 스코프를 다 search, 지정하면 해당 scope만 search
+	 -->
+</tiles-definitions>

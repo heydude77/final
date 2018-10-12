@@ -21,5 +21,12 @@
 	<select id="getPasswordById" parameterType="java.lang.String" resultType="java.lang.String">
 		select pass from employee where id=#{id}
 	</select>
+	
+	
+	<select id="getEmployee" parameterType="java.lang.String" resultType="java.util.HashMap">
+		select t.*, position.pname from
+			(select employee.*, department.dname from employee join department on employee.did = department.did ) t 
+		join position on t.pid = position.pid where id=#{id }
+	</select>
 </mapper>
 

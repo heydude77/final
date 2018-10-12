@@ -36,7 +36,7 @@
 			 class="sr-only">Password</label> <input
 			type="password" id="inputPassword" class="form-control"
 			placeholder="Password" required name="pw">
-			<small>최초 비밀번호는 1111로 설정돼어 있습니다.</small>
+			<small>최초 비밀번호는 1111로 설정되어 있습니다.</small>
 		<div class="checkbox mb-3">
 			<label> <input type="checkbox" value="remember-me">
 				Remember me
