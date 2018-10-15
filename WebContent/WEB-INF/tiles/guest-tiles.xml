@@ -19,6 +19,19 @@
 		<put-attribute name="center" expression="${requestScope.center}"/>
 	</definition>
 	
+	<definition name="message.list" template="/WEB-INF/tiles/guest-template.jsp">
+		<put-attribute name="nav" value="/WEB-INF/views/guest/nav.jsp"/>
+		<put-attribute name="left" value="/WEB-INF/views/guest/side.jsp"/>
+		<put-attribute name="center" expression="${requestScope.center}"/>
+	</definition>
+	
+	<definition name="guest.chat" template="/WEB-INF/tiles/guest-template.jsp">
+		<put-attribute name="nav" value="/WEB-INF/views/guest/nav.jsp"/>
+		<put-attribute name="left" value="/WEB-INF/views/guest/side.jsp"/>
+		<put-attribute name="center" expression="/WEB-INF/views/guest/chat/room.jsp"/>
+	</definition>
+	
+	
 	<definition name="exam" template="/WEB-INF/tiles/template.jsp">
 		<put-attribute name="page1" value="/WEB-INF/views/nav.jsp"/>
 		<put-attribute name="page2" expression="${requestScope.page2 }"/>

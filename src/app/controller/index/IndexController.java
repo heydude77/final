@@ -80,8 +80,10 @@ public class IndexController {
 	}	
 	
 	@GetMapping("/logout.do")
-	public String logoutHandle(WebRequest wr) {
-		wr.removeAttribute("auth", WebRequest.SCOPE_SESSION);
+	public String logoutHandle(HttpSession session) {
+		String user = (String) session.getAttribute("userId");		
+		sessions.remove(user);
+		session.invalidate();
 		return "redirect:/index.do";
 	}
 }

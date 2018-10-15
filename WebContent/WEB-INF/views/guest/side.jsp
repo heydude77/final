@@ -8,12 +8,9 @@
 		<li class="nav-item"><a class="nav-link" href="#"> <span
 				data-feather="file"></span> Orders
 		</a></li>
-		<li class="nav-item"><a class="nav-link" href="#"> <span
-				data-feather="shopping-cart"></span> Products
-		</a></li>
-		<li class="nav-item"><a class="nav-link" href="#"> <span
-				data-feather="users"></span> Customers
-		</a></li>
+		<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/chat/room.do"> <span
+				data-feather="shopping-cart"></span> chat
+		</a></li>		
 	</ul>
 	<h6
 		class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
@@ -23,8 +20,8 @@
 		</a>
 	</h6>
 	<ul class="nav flex-column mb-2">
-		<li class="nav-item"><a class="nav-link" href=""> <span
-				data-feather="file-text"></span> 내 정보 보기
+		<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/messageList.do"> <span
+				data-feather="users"></span> 쪽지함
 		</a></li>
 		<li class="nav-item"><a class="nav-link" href="${pageContext.servletContext.contextPath }/infoChange.do"> <span
 				data-feather="file-text"></span> 내 정보 변경

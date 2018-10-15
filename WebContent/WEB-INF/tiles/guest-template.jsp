@@ -18,6 +18,9 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
 <link href="${pageContext.servletContext.contextPath }/css/bootstrap.css" rel="stylesheet">
 
+    
+
+
 <title>사내 관리 프로그램</title>
 
 <title>그룹웨어</title>
@@ -31,8 +34,10 @@
 		<div class="row">
 			<nav class="col-md-2 d-none d-md-block bg-light sidebar">
 				<tiles:insertAttribute name="left" />
-			</nav>
+			</nav>	
 			<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+			<h1 class="h2">GROUPWARE</h1>
+	
 				<div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded shadow-sm">
 			        <div class="lh-100">
 			          <h6 class="mb-0 text-white lh-100">${info.NAME}님</h6>

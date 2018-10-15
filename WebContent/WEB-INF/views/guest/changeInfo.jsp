@@ -33,7 +33,9 @@
       <input type="text" readonly class="form-control-plaintext"value="${info.DNAME} / ${info.PNAME}">      
     </div>
   </div>
-  <button type="submit" class="btn btn-primary mb-2" >메인으로</button>
+  <a href = "${pageContext.servletContext.contextPath }/index.do">
+   <button type="submit" class="btn btn-primary mb-2" >메인으로</button></a>
+
 </body>
 
 <script>	
@@ -54,14 +56,16 @@
 		var pw = document.getElementById("newPw").value;
 		var id = "${info.ID}";
 		var xhr = new XMLHttpRequest();
-		xhr.open("get","${pageContext.servletContext.contextPath}/changePassword.do?id="+id+"+&pass="+pw, true);
+		xhr.open("get","${pageContext.servletContext.contextPath}/changePassword.do?id="+id+"&pass="+pw, true);
 		xhr.onreadystatechange =function(){
 			if(this.readyState==4) {
-				var obj = this.responseText;
-				console.log("obj2="+obj);
+				var obj = JSON.parse(this.responseText);
+				console.log("obj="+obj);
 							
 				if(obj==1) {					
 					window.alert("비번 바뀜 ㅋㅋ");
+					document.getElementById("newPw").value = "";
+					document.getElementById("confirmPw").value = "";
 				} else {
 					window.alert("에러남 ㅋㅋ");
 				}

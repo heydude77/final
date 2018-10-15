@@ -38,8 +38,11 @@ public class EmployeeRepository {
 	public Map getEmployee(String id){
 		return template.selectOne("employee.getEmployee", id);
 	}
-	public int changePassword(Map map) {
-		
+	public int changePassword(Map map) {		
 		return template.update("employee.chagePassword", map);
 	}
+	public List<Map> getEmployeeByDep(Map map){
+		return template.selectList("employee.getEmployeeByDep", map);
+	}
+	
 }

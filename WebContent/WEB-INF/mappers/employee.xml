@@ -33,5 +33,9 @@
 		update employee set pass = #{pass} where id=#{id}
 	</update>
 	
+	<select id="getEmployeeByDep" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		select name from employee where did=#{did}
+	</select>
+	
 </mapper>
 
