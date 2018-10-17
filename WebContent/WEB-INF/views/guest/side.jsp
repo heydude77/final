@@ -51,8 +51,22 @@
 			case "invalidated" :
 				invalidatedHandle();
 				break;
+			case "newMessage" :
+				newMessageHandle(obj);
+				break;
 			}
 		};		
+		
+		var newMessageHandle = function(obj){
+			html += obj.name +"("+obj.dname+"/"+obj.pname+") : ";
+			var html = "<div class=\"alert alert-warning alert-dismissible fade show\" role=\"alert\">";
+			html += "<strong>【NewChatting】</strong><br/> 새로운 채팅이 있습니다.</br>";
+			html += obj.name +"("+obj.dname+"/"+obj.pname+") : "+obj.text;
+			html += "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">";
+			html += "<span aria-hidden=\"true\">&times;</span>";
+			html += "</div>";
+			document.getElementById("alert").innerHTML += html;
+		}
 		
 		var loginAlertHandle = function(obj) {
 			var name = obj.user.NAME;

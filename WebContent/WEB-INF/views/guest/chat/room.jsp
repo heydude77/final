@@ -4,18 +4,34 @@
 
 <h4>Chat Room <small id="chatType">(All Departments)</small>
 <small><button class="btn btn-dark" id="chatMode">부서 채팅</button></small></h4>
-
-<div style="height: 400px; overflow-y: scroll; " id="chatView">
+<div class="row">
+  <div class="col-sm-8">
+	<div style="height: 400px; overflow-y: scroll; " id="chatView">
 	
-
-</div>
-<div class="input-group mb-3">
-  <div class="input-group-prepend">
-    <span class="input-group-text" id="basic-addon1">CHAT</span>
+	
+	</div>
   </div>
-  <input type="text" class="form-control" aria-describedby="basic-addon1" id="input">
+   <div class="col-sm-4">
+   	<ul class="list-group" style="height: 400px; overflow-y: scroll; color: gray" id="connectedList">
+		<c:forEach var="i" items="${list.info}">
+			<li class="list-group-item list-group-item-action list-group-item-secondary" value="${i.ID}"> ${i.NAME }</li>    
+   	 	</c:forEach> 
+	</ul>
+   </div>
 </div>
-
+<div class="row">
+	<div class="col-sm-8">
+		<div class="input-group mb-3">
+		  <div class="input-group-prepend">
+		    <span class="input-group-text" id="basic-addon1">CHAT</span>
+		  </div>
+		  <input type="text" class="form-control" aria-describedby="basic-addon1" id="input">
+			</div>
+	</div>
+	<div class="col-sm-4">
+		버튼 하나 만들면댐
+	</div>
+</div>
 <script>
 	var mode ="public";
 	
@@ -49,8 +65,15 @@
 		case "department" :
 			depHandle(obj);
 			break;
+		case "newUser":
+			newUserHandle();
+			break;
 		}
 	}
+	
+	var newUserHandler = function(){
+		
+	};
 	
 	var depHandle = function(obj) {
 		

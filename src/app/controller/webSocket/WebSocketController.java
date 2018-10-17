@@ -20,7 +20,7 @@ import models.AlertService;
 
 @Controller
 public class WebSocketController extends TextWebSocketHandler {
-	@Autowired
+	   @Autowired
 	   Gson gson;
 
 	   @Autowired
