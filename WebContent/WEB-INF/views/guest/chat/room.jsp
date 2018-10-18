@@ -12,11 +12,12 @@
 	</div>
   </div>
    <div class="col-sm-4">
-   	<ul class="list-group" style="height: 400px; overflow-y: scroll; color: gray" id="connectedList">
-		<c:forEach var="i" items="${list.info}">
-			<li class="list-group-item list-group-item-action list-group-item-secondary" value="${i.ID}"> ${i.NAME }</li>    
-   	 	</c:forEach> 
-	</ul>
+   	<ul class="list-group" style="height: 400px; overflow-y: scroll; color: gray" >
+	   	<li class="list-group-item list-group-item-action list-group-item-secondary" value="${info.ID}"> ${info.NAME}(${info.DNAME}/${info.PNAME})</li>
+			<li id="connectedList">
+			
+			</li>
+		</ul>
    </div>
 </div>
 <div class="row">
@@ -56,8 +57,9 @@
 	var chatws = new WebSocket("ws://"+location.host+
 			"${pageContext.servletContext.contextPath}/chat.do");
 	chatws.onmessage = function(evt) {
-		console.log(evt.data);
+		console.log("evt : "+evt.data);
 		var obj = JSON.parse(evt.data);
+		console.log(obj);
 		switch(obj.mode) {
 		case "public" :
 			publicHandle(obj);
@@ -66,13 +68,39 @@
 			depHandle(obj);
 			break;
 		case "newUser":
-			newUserHandle();
+			newUserHandle(obj);
+			break;
+		case "userLeft":
+			newUserHandle(obj);
 			break;
 		}
 	}
+
 	
-	var newUserHandler = function(){
+	var newUserHandle = function(obj){
+		var chatSockets = obj.chatSockets;
+		console.log(chatSockets);
+		var html = "";
+		for (var i =0; i<chatSockets.length; i++){
+			var userId = "${info.ID}";
+			console.log("userid:"+userId);
+			
+			var id = chatSockets[i].ID;
+			var name = chatSockets[i].NAME;
+			var dname = chatSockets[i].DNAME;
+			var pname = chatSockets[i].PNAME;
+			if(userId != id){
+			html += "<li class=\"list-group-item list-group-item-action list-group-item-secondary\" value="+id+"> "+name+"("+dname+"/"+pname+")</li>";
+			}
+		}
 		
+		if(obj.mode=="newUser"){
+			document.getElementById("chatView").innerHTML += obj.who+" 님이 입장하셨습니다.<br\>";
+		}
+		if(obj.mode=="userLeft"){
+			document.getElementById("chatView").innerHTML += obj.who+" 님이 퇴장하셨습니다.<br\>";
+		}
+		document.getElementById("connectedList").innerHTML = html;
 	};
 	
 	var depHandle = function(obj) {
@@ -93,10 +121,17 @@
 	document.getElementById("input").onchange = function(){
 		console.log(this.value);
 		var msg= {
-				"mode" : mode,				
+				//({"_id":"em1014", "name":"구구구", "text" : "채팅내용.","date": "14:31","read" :["em1040","em9999"]});
+				"mode" : mode,	
+				"_id" : "${info.ID}",
+				"name" : "${info.NAME}",
+				"dname" : "${info.DNAME}",
+				"pname" : "${info.PNAME}",
  				"text" : this.value
 		};
 		chatws.send(JSON.stringify(msg));
 		this.value="";
 	}
+	
+	
 </script>

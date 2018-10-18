@@ -19,9 +19,9 @@ public class ChatController {
 	
 	@GetMapping("/room.do")
 	public String chatRoomHandle(Map map, ModelMap mm) {
-		List list = (List) csc.getChatConnectors();
-		System.out.println("cscList : "+list);
-		mm.addAttribute(list);
+		//List list = (List) csc.getWsList();		
+		//System.out.println("cscList : "+list);
+		//mm.addAttribute(list);
 		map.put("uri", "chat");
 		return "guest.chat";
 	}
